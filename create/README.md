@@ -23,7 +23,7 @@ Example `metadata.json` file
   "description": "Test description of article"
 }
 ```
-This action will output the response from Figshare to `create_resp.json`
+This action will output the response from Figshare to `figshare_create_resp.json`
 
 ## Secrets
 * `FIGSHARE_API_TOKEN` - **Required** The API access_token for Figshare account.

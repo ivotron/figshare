@@ -12,7 +12,7 @@ action "download" {
   secrets = ["FIGSHARE_API_TOKEN"]
   env = {
     FIGSHARE_ARTICLE_ID = "6865523"
-    FIGSHARE_OUTPUT_DIR_PATH = "./data"
+    FIGSHARE_OUTPUT_PATH = "./data"
   }
 }
 ```
@@ -21,4 +21,4 @@ action "download" {
 
 ## Environment variables
 * `FIGSHARE_ARTICLE_ID` - **Required** ID of the article from which files have to be downloaded.
-* `FIGSHARE_OUTPUT_DIR_PATH`- **Required** Path to the output directory.
+* `FIGSHARE_OUTPUT_PATH`- **Required** Path to the output directory.

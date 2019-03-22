@@ -5,4 +5,4 @@ curl --header "Content-Type: application/json" \
       --request POST \
       --data @$FIGSHARE_METADATA_PATH \
       $BASE_URL?access_token=$FIGSHARE_API_TOKEN \
-      -o $GITHUB_WORKSPACE/create_resp.json
+      -o $GITHUB_WORKSPACE/figshare_create_resp.json
