@@ -2,6 +2,12 @@
 
 set -e
 BASE_URL='https://api.figshare.com/v2/account/articles'
+if [[ -e "$GITHUB_WORKSPACE/figshare_create_resp.json" ]] && [[ -z "$FIGSHARE_ARTICLE_ID" ]];
+then
+    LOCATION_URL=$(jq -r '.location' $GITHUB_WORKSPACE/figshare_create_resp.json)
+    export FIGSHARE_ARTICLE_ID=$(echo ${LOCATION_URL##*/})
+    echo $FIGSHARE_ARTICLE_ID
+fi
 if [[ -d "$FIGSHARE_UPLOAD_PATH" ]] && [ "$(ls -A $FIGSHARE_UPLOAD_PATH)" ]; then
     for file in "$FIGSHARE_UPLOAD_PATH"/*; do
         echo "$file"
@@ -22,13 +28,13 @@ if [[ -d "$FIGSHARE_UPLOAD_PATH" ]] && [ "$(ls -A $FIGSHARE_UPLOAD_PATH)" ]; the
         PARTS_SIZE=$(($PARTS_SIZE+1))
         echo 'The part value is: '$PARTS_SIZE
         echo 'Spliting the provided item into parts process had begun...'
-        mkdir temp && split -b$PARTS_SIZE "$file" "temp/part_"
+        mkdir temp && split -b$PARTS_SIZE "$file" "$GITHUB_WORKSPACE/temp/part_"
         echo 'Process completed!'
         MAX_PART=$((($FILE_SIZE+$PARTS_SIZE-1)/$PARTS_SIZE))
         echo 'The number of parts is: '$MAX_PART
         echo 'Perform the PUT operation of parts...'
         i=1
-        for f in temp/*; do
+        for f in $GITHUB_WORKSPACE/temp/*; do
             echo $f $i
             RESPONSE=$(curl -s -f -H 'Authorization: token '$FIGSHARE_API_TOKEN -X PUT "$UPLOAD_URL/$i" --data-binary @$f)
             i=$((i+1))
@@ -36,7 +42,7 @@ if [[ -d "$FIGSHARE_UPLOAD_PATH" ]] && [ "$(ls -A $FIGSHARE_UPLOAD_PATH)" ]; the
         echo 'Completing the file upload...'
         RESPONSE=$(curl -s -f -H 'Authorization: token '$FIGSHARE_API_TOKEN -X POST "$BASE_URL/$FIGSHARE_ARTICLE_ID/files/$FILE_ID")
         echo 'Done!'
-        rm -rf temp/
+        rm -rf $GITHUB_WORKSPACE/temp/
     done
 else
     echo "$GITHUB_WORKSPACE/$FIGSHARE_UPLOAD_PATH does not exist or empty"
