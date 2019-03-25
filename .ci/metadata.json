@@ -1,4 +1,14 @@
 {
-  "title": "Test article title",
-  "description": "Test description of article"
+  "title": "final article title",
+  "description": "Test description of article",
+  "keywords": [
+    "tag1",
+    "tag2"
+  ],
+  "categories": [
+    1,
+    10,
+    11
+  ],
+  "license": 1
 }
