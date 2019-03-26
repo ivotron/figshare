@@ -2,14 +2,14 @@
 
 set -e
 BASE_URL='https://api.figshare.com/v2/account/articles'
-if [[ -e "$GITHUB_WORKSPACE/figshare_create_resp.json" ]] && [[ -z "$FIGSHARE_ARTICLE_ID" ]];
+if [[ ! -e "$GITHUB_WORKSPACE/figshare_create_resp.json" ]] && [[ -z "$FIGSHARE_ARTICLE_ID" ]];
 then
+    echo "No Article ID found"
+    exit 1
+elif [[ -z "$FIGSHARE_ARTICLE_ID" ]]; then
     LOCATION_URL=$(jq -r '.location' $GITHUB_WORKSPACE/figshare_create_resp.json)
     export FIGSHARE_ARTICLE_ID=$(echo ${LOCATION_URL##*/})
     echo $FIGSHARE_ARTICLE_ID
-else
-    echo "No Article ID found"
-    exit 1
 fi
 if [ -z $FIGSHARE_UPLOAD_PATH ]; then
   echo "Expecting FIGSHARE_UPLOAD_PATH variable"
