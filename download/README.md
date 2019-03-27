@@ -1,4 +1,4 @@
-# Action for Zenodo-files-download
+# Action for Figshare-files-download
 This action will download files from an article.
 
 ## Usage
