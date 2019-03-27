@@ -9,7 +9,7 @@ workflow "Upload Files" {
   resolves = "upload"
 }
 action "upload" {
-  uses = "./upload"
+  uses = "popperized/figshare/upload@master"
   secrets = ["FIGSHARE_API_TOKEN"]
   env = {
     FIGSHARE_ARTICLE_ID = ""

@@ -11,7 +11,7 @@ workflow "Create DOI" {
 }
 
 action "create" {
-  uses = "./create"
+  uses = "popperized/figshare/create@master"
   secrets = ["FIGSHARE_API_TOKEN"]
   env = {
     FIGSHARE_METADATA_PATH = "./metadata.json"
@@ -20,7 +20,7 @@ action "create" {
 
 action "upload" {
   needs="create"
-  uses = "./upload"
+  uses = "popperized/figshare/upload@master"
   secrets = ["FIGSHARE_API_TOKEN"]
   env = {
     FIGSHARE_UPLOAD_PATH = "./files"
@@ -29,7 +29,7 @@ action "upload" {
 
 action "publish" {
   needs="upload"
-  uses = "./publish"
+  uses = "popperized/figshare/publish@master"
   secrets = [ "FIGSHARE_API_TOKEN" ]
 }
 ```

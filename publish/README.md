@@ -11,7 +11,7 @@ workflow "Publish Article" {
   resolves = "publish"
 }
 action "publish" {
-  uses = "./publish"
+  uses = "popperized/figshare/publish@master"
   secrets = [ "FIGSHARE_API_TOKEN" ]
   env = {
     FIGSHARE_ARTICLE_ID = ""
